@@ -3,7 +3,6 @@ package io.github.cursodsousa.libraryapi.service;
 import io.github.cursodsousa.libraryapi.model.GeneroLivro;
 import io.github.cursodsousa.libraryapi.model.Livro;
 import io.github.cursodsousa.libraryapi.repository.LivroRepository;
-import io.github.cursodsousa.libraryapi.repository.specs.LivroSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -55,5 +54,12 @@ public class LivroService {
             specs = specs.and(nomeAutorLike(nomeAutor));
         }
         return repository.findAll(specs);
+    }
+
+    public void atualizar(Livro livro) {
+        if (livro.getId() == null) {
+            throw new IllegalArgumentException("Para atualizar eh necessario que o livro ja esteja salvo na base");
+        }
+        repository.save(livro);
     }
 }
