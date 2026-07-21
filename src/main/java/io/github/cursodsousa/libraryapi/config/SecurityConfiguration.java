@@ -28,11 +28,13 @@ public class SecurityConfiguration {
                 })
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/login").permitAll();
-                    authorize.requestMatchers(HttpMethod.POST, "/autores/**").hasAuthority("CADSTRAR USUARIO");
-                    authorize.requestMatchers(HttpMethod.DELETE, "/autores/**").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.PUT, "/autores/**").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.GET, "/autores/**").hasAnyRole("USER", "ADMIN");
+                    // authorize.requestMatchers("/login").permitAll();
+                    // authorize.requestMatchers(HttpMethod.POST, "/autores/**").hasAuthority("CADSTRAR USUARIO");
+                    // authorize.requestMatchers(HttpMethod.DELETE, "/autores/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.PUT, "/autores/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.GET, "/autores/**").hasAnyRole("USER", "ADMIN");
+                    authorize.requestMatchers("/login/**").permitAll();
+                    authorize.requestMatchers("/autores/**").hasAnyRole("USER", "ADMIN");
                     authorize.requestMatchers("/livros/**").hasAnyRole("USER", "ADMIN");
                     authorize.anyRequest().authenticated();
                 })
