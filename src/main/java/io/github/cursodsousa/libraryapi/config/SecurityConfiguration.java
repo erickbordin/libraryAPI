@@ -1,5 +1,7 @@
 package io.github.cursodsousa.libraryapi.config;
 
+import io.github.cursodsousa.libraryapi.security.CustomUserDetailsService;
+import io.github.cursodsousa.libraryapi.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -49,21 +51,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-
-        UserDetails user1 = User.builder()
-                .username("usuario")
-                .password(encoder.encode("123"))
-                .roles("USER")
-                .build();
-
-        UserDetails user2 = User.builder()
-                .username("admin")
-                .password(encoder.encode("321"))
-                .roles("admin")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, user2);
+    public UserDetailsService userDetailsService(UsuarioService usuarioService) {
+        return new CustomUserDetailsService(usuarioService);
     }
 
 }
